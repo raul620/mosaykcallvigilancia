@@ -189,9 +189,71 @@ public class MainActivity extends AppCompatActivity {
             // Launch the new activity with the given options. The launch() method takes care
             // of creating the required Intent and passing the options.
             //JitsiMeetActivity.launch(this, defaultOptions);
-        sala = MACWIFI;
+
+        consulta_sala();
+        //sala = MACWIFI;
         llamada2.run();
         Sala(sala);
+    }
+
+    public void consulta_sala(){
+
+        final String ssd = "";
+        JSONObject jsonObject = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, LLAMADA+MACWIFI, jsonObject,
+                response -> {
+                    try {
+                        PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+                        String versionapp = pInfo.versionName;
+                        Log.e("respuesta llamda", String.valueOf(response));
+                        //String llamada = pInfo.versionName;
+
+                        JSONArray llamada = response.getJSONArray("LLamadas");
+
+                        JSONObject jo_inside = llamada.getJSONObject(0);
+                        String tipo = jo_inside.getString("recepcion_llamada");
+                        String sala2 = jo_inside.getString("sala");
+                        String[] salados = sala2.split("https://www.call.softwaremediafactory.com/");
+                        Log.e("array", String.valueOf(salados[1]));
+                        sala = String.valueOf(salados[1]);
+
+                    }
+                    catch (JSONException | PackageManager.NameNotFoundException e){
+                        e.printStackTrace();
+                        Log.e("Error"," "+e);
+                        //Destroy();
+                        return;
+                    }
+                }, error -> {
+            if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                //Destroy();
+                return ;
+            } else if (error instanceof AuthFailureError) {
+                //Destroy();
+                return ;
+            } else if (error instanceof ServerError) {
+                Toast.makeText(getApplicationContext(), "Error en consulta a la Base de Datos ", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (error instanceof NetworkError) {
+                //Destroy();
+                return ;
+            } else if (error instanceof ParseError) {
+                //Destroy();
+                return;
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleyQueue.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+
+
     }
 
     public void Sala(String sala) {
@@ -206,17 +268,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             throw new RuntimeException("Invalid server URL!");
         }
-        Log.e("urlserver", String.valueOf(serverURL));
-        String[] mac = sala.split(":");
-        String sala2 ="";
-        for(int i = 0; i < mac.length; i++){
-            sala2 += mac[i];
-        }
+        //Log.e("urlserver", String.valueOf(serverURL));
+        //String[] mac = sala.split(":");
+        ////String sala2 ="";
+        //for(int i = 0; i < mac.length; i++){
+            //sala2 += mac[i];
+        //}
 
         JitsiMeetConferenceOptions defaultOptions
                 = new JitsiMeetConferenceOptions.Builder()
                 .setServerURL(serverURL)
-                .setRoom(sala2)
+                .setRoom(sala)
                 .setWelcomePageEnabled(false)
                 .build();
         JitsiMeetActivity.launch(this, defaultOptions);
@@ -267,11 +329,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnected()) {
             conex = "1";
-            MACWIFI = getMacAddress();
+            MACWIFI = "cc:4b:73:d9:8b:ca";
+            //MACWIFI = getMacAddress();
             //Toast.makeText(this, "Conectado", Toast.LENGTH_SHORT).show();
         } else {
             conex = "0";
-            MACWIFI = getMacAddress();
+            MACWIFI = "cc:4b:73:d9:8b:ca";
+            //MACWIFI = getMacAddress();
             //Toast.makeText(this, "Sin Conexión", Toast.LENGTH_SHORT).show();
         }
         //return conex;
