@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         consulta_sala();
         //sala = MACWIFI;
         llamada2.run();
-        Sala(sala);
+
     }
 
     public void consulta_sala(){
@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                         String[] salados = sala2.split("https://www.call.softwaremediafactory.com/");
                         Log.e("array", String.valueOf(salados[1]));
                         sala = String.valueOf(salados[1]);
+                        Sala(sala);
 
                     }
                     catch (JSONException | PackageManager.NameNotFoundException e){
