@@ -311,6 +311,8 @@ public class MainActivity extends AppCompatActivity {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mac_wifi",MACWIFI);
                 params.put("tipo","");
+                params.put("familiar","");
+                params.put("sala","");
                 return params;
             }
 
