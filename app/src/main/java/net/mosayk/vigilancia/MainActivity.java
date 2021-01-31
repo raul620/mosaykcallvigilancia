@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         VerificaConex();
-        MACWIFI = getMacAddress();
+        MACWIFI = "cc:4b:73:d9:8b:ca";
+        //MACWIFI = getMacAddress();
 
         View btn_offline = findViewById(R.id.button_logo);
 
@@ -100,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jo_inside = llamada.getJSONObject(0);
                         String sala2 = jo_inside.getString("sala");
                         String[] salados = sala2.split("https://www.call.softwaremediafactory.com/");
-                        Log.e("array", ""+salados[1]);
-                        sala = String.valueOf(salados[1]);
-                        Sala(sala);
+                        if(!sala2.isEmpty()) {
+                            Log.e("array", "" + salados[1]);
+                            sala = String.valueOf(salados[1]);
+                            Sala(sala);
+                        }
 
                     }
                     catch (JSONException e){
@@ -178,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mac_wifi",MACWIFI);
+                params.put("llamada_activa","false");
                 params.put("tipo","");
                 params.put("familiar","");
                 params.put("sala","");
