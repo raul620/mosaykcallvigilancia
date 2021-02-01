@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         VerificaConex();
-        MACWIFI = "cc:4b:73:d9:8b:ca";
-        //MACWIFI = getMacAddress();
+        //MACWIFI = "cc:4b:73:d9:8b:ca";
+        MACWIFI = getMacAddress();
 
         View btn_offline = findViewById(R.id.button_logo);
 
