@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mac_wifi",MACWIFI);
-                params.put("llamada_activa","false");
+                params.put("recepcion_llamada","false");
                 params.put("tipo","");
                 params.put("familiar","");
                 params.put("sala","");
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mac_wifi",MACWIFI);
-                params.put("llamada_activa","false");
+                params.put("recepcion_llamada","false");
                 params.put("tipo","");
                 params.put("familiar","");
                 params.put("sala","");
