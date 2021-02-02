@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         VerificaConex();
-        //MACWIFI = "cc:4b:73:d9:8b:ca";
-        MACWIFI = getMacAddress();
+        MACWIFI = "cc:4b:73:d9:8b:ca";
+        //MACWIFI = getMacAddress();
 
         View btn_offline = findViewById(R.id.button_logo);
 
@@ -239,7 +239,10 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("mac_wifi",MACWIFI);
+                params.put("llamada_activa","false");
                 params.put("tipo","");
+                params.put("familiar","");
+                params.put("sala","");
                 return params;
             }
 
