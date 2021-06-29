@@ -45,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import timber.log.Timber;
+
 import static net.mosayk.vigilancia.DataStructure.DatabaseHelper.LLAMADA;
 import static net.mosayk.vigilancia.DataStructure.DatabaseHelper.LLAMADASALIENTE;
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         VerificaConex();
-       // MACWIFI = "cc:4b:73:a8:d3:38";
+        //MACWIFI = "CC:4B:73:A8:D3:38";
         MACWIFI = getMacAddress();
 
         View btn_offline = findViewById(R.id.button_logo);
@@ -91,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void consulta_sala(){
 
+        Toast.makeText(getApplicationContext(), "La mac es: "+MACWIFI, Toast.LENGTH_SHORT).show();
+
+
         JSONObject jsonObject = new JSONObject();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, LLAMADA+MACWIFI, jsonObject,
@@ -100,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray llamada = response.getJSONArray("LLamadas");
                         JSONObject jo_inside = llamada.getJSONObject(0);
                         String sala2 = jo_inside.getString("sala");
-                        String[] salados = sala2.split("https://www.call.softwaremediafactory.com/");
+                        String[] salados = sala2.split("https://call.softwaremediafactory.com/");
                         if(!sala2.isEmpty()) {
-                            Log.e("array", "" + salados[1]);
+                            Timber.e("%s", salados[1]);
                             sala = String.valueOf(salados[1]);
                             Sala(sala);
                         }
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         URL serverURL;
         try {
-            serverURL = new URL("https://www.call.softwaremediafactory.com/");
+            serverURL = new URL("https://call.softwaremediafactory.com/");
         } catch (MalformedURLException e) {
             e.printStackTrace();
             throw new RuntimeException("Invalid server URL!");
@@ -280,10 +285,14 @@ public class MainActivity extends AppCompatActivity {
 
                             }else if (tipo.equals("APRB") ){
 
-                            }else if (tipo.isEmpty()  ){
+                            }else if (tipo.isEmpty()){
                                 Destroy();
+                                Toast.makeText(getApplicationContext(), "La llamada esta vacia", Toast.LENGTH_SHORT).show();
+
                             }else{
                                 Destroy();
+                                Toast.makeText(getApplicationContext(), "Destruido por razones desconocidas", Toast.LENGTH_SHORT).show();
+
                             }
 
                         }
