@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         VerificaConex();
-        MACWIFI = "cc:4b:73:d9:8b:ca";
-        //MACWIFI = getMacAddress();
+        //MACWIFI = "cc:4b:73:d9:8b:ca";
+        MACWIFI = getMacAddress();
 
         View btn_offline = findViewById(R.id.button_logo);
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray llamada = response.getJSONArray("LLamadas");
                         JSONObject jo_inside = llamada.getJSONObject(0);
                         String sala2 = jo_inside.getString("sala");
-                        String[] salados = sala2.split("https://www.call.softwaremediafactory.com/");
+                        String[] salados = sala2.split("https://call.softwaremediafactory.com/");
                         if(!sala2.isEmpty()) {
                             Log.e("array", "" + salados[1]);
                             sala = String.valueOf(salados[1]);
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         URL serverURL;
         try {
-            serverURL = new URL("https://www.call.softwaremediafactory.com/");
+            serverURL = new URL("https://call.softwaremediafactory.com/");
         } catch (MalformedURLException e) {
             e.printStackTrace();
             throw new RuntimeException("Invalid server URL!");
